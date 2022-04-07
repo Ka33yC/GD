@@ -72,7 +72,7 @@ namespace GD
 		private static bool CheckPart(string partToCheck, int minSeparatedLength, int maxSymbolsCount, int minSeparatedCount = 1)
 		{
 			string[] separatedByDot = partToCheck.Split('.');
-			if (separatedByDot.Length > minSeparatedCount) return false;
+			if (separatedByDot.Length < minSeparatedCount) return false;
 
 			int symbolsCount = 0;
 			foreach (var separated in separatedByDot)
