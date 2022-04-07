@@ -8,7 +8,7 @@ namespace GD
 {
 	class EmailCounter
 	{
-		public static List<string> GetUniqueEmails(List<string> words)
+		public static List<string> GetUniqueEmails(string[] words)
 		{
 			List<string> emails = new List<string>();
 
