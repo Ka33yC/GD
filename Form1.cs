@@ -74,7 +74,7 @@ namespace GD
 
 		private string[] SplitTheText(string text)
 		{
-			char[] separators = new char[] { ' ', ',', ':', ';', '-', '=', '!', '?', '/', '\\', '|', '*', '$', '%', '^' };
+			char[] separators = new char[] { ' ', ',', ':', ';', '-', '=', '!', '?', '/', '\\', '|', '*', '$', '%', '^', '\r', '\n' };
 			string[] splitedText = text.Trim().Split(separators, StringSplitOptions.TrimEntries);
 			return splitedText;
 		}
@@ -83,8 +83,8 @@ namespace GD
         {
 			if (textFromFile == null)
 				return;
-
-			List<string> listOfUniqueMails = EmailCounter.GetUniqueEmails(SplitTheText(textFromFile));
+			string[] splitted = SplitTheText(textFromFile);
+			List<string> listOfUniqueMails = EmailCounter.GetUniqueEmails(splitted);
 			string NotListOfUniqueMails = "";
 			foreach (string s in listOfUniqueMails)
 				NotListOfUniqueMails += s + "\n";
