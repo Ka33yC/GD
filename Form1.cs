@@ -55,9 +55,6 @@ namespace GD
 			DisplayTextFromFile(textFromFile);
 			//DisplayuniqueMails(textFromFile);
 
-			//ПОТОМ УДАЛИТЬ
-			SetNumbersOfSourseMails(15);
-
 			//разбиваю текст на части
 			SplitTheText(textFromFile);
 		}
@@ -138,7 +135,23 @@ namespace GD
         {
 			if (!String.IsNullOrEmpty(SampleTextBox.Text))
 			{
-				MessageBox.Show(EmailCounter.CheckDomain(SampleTextBox.Text.Trim()).ToString());
+				char[] separators = new char[] { ' ', ',', '\r', '\n' };
+				string[] splitedText = SampleTextBox.Text.Trim().Split(separators, StringSplitOptions.TrimEntries);
+
+				List<string> trueDomains = new List<string>();
+				foreach (string s in splitedText)
+                {
+					if (EmailCounter.CheckDomain(s))
+                    {
+						trueDomains.Add(s);
+					}
+                }
+
+				SampleTextBox.Clear();
+				foreach (string s in trueDomains)
+					SampleTextBox.Text += s + ", ";
+
+				//Foo(trueDomains.ToArray());
 			}
 			else
 			{
@@ -149,5 +162,12 @@ namespace GD
         {
 
         }
+
+        private void ResetSampleButton_Click(object sender, EventArgs e)
+        {
+			SampleTextBox.Clear();
+			//очистить заданные шаблоны мейлов
+			//Foo();
+		}
     }
 }
