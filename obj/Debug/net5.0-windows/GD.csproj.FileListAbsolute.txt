@@ -6,7 +6,6 @@ C:\Users\Олег\OneDrive\Документы\GitHub\GD\bin\Debug\net5.0-windows
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\bin\Debug\net5.0-windows\ref\GD.dll
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\bin\Debug\net5.0-windows\GD.pdb
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.csproj.AssemblyReference.cache
-C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.Form1.resources
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.csproj.GenerateResource.cache
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.AssemblyInfoInputs.cache
@@ -16,3 +15,4 @@ C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\ref\GD.dll
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.pdb
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.genruntimeconfig.cache
+C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.FindMailsInTheText.resources
