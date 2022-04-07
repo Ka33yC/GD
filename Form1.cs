@@ -13,7 +13,7 @@ namespace GD
 {
 	public partial class FindMailsInTheText : Form
 	{
-		string textFromFile = null;
+		string mainText = null;
 		public FindMailsInTheText()
 		{
 			InitializeComponent();
@@ -31,8 +31,8 @@ namespace GD
 
 		private void CheckFile(string fileName)
         {
-			string fpath = Path.GetExtension(fileName);
-			if (fpath != ".txt")
+			string textFromFile = Path.GetExtension(fileName);
+			if (textFromFile != ".txt")
 			{
 				MessageBox.Show("Файл должен иметь расширение '.txt'");
 				return;
@@ -50,6 +50,7 @@ namespace GD
 				return;
 			}
 
+			mainText = textFromFile;
 			//Вывожу текст на экран
 			DisplayTextFromFile(textFromFile);
 			//DisplayuniqueMails(textFromFile);
@@ -81,9 +82,9 @@ namespace GD
 
         private void FindUniqueMailsButton_Click(object sender, EventArgs e)
         {
-			if (textFromFile == null)
+			if (SourseTextBox.Text == null)
 				return;
-			string[] splitted = SplitTheText(textFromFile);
+			string[] splitted = SplitTheText(SourseTextBox.Text);
 			List<string> listOfUniqueMails = EmailCounter.GetUniqueEmails(splitted);
 			string NotListOfUniqueMails = "";
 			foreach (string s in listOfUniqueMails)
@@ -91,6 +92,8 @@ namespace GD
 
 			DisplayuniqueMails(NotListOfUniqueMails);
 
+			SetNumbersOfSourseMails(listOfUniqueMails.Count());
+			SetNumbersOfUniqueMails(listOfUniqueMails.Count());
 		}
 
         private void SaveMailsToFileButton_Click(object sender, EventArgs e)
