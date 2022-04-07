@@ -85,7 +85,7 @@ namespace GD
 			if (SourseTextBox.Text == null)
 				return;
 			string[] splitted = SplitTheText(SourseTextBox.Text);
-			List<string> listOfUniqueMails = EmailCounter.GetUniqueEmails(splitted);
+			List<string> listOfUniqueMails = EmailCounter.GetAllEmails(splitted);
 			string NotListOfUniqueMails = "";
 			foreach (string s in listOfUniqueMails)
 				NotListOfUniqueMails += s + "\n";
@@ -136,13 +136,13 @@ namespace GD
 
         private void SetSampleButton_Click(object sender, EventArgs e)
         {
-			if (SampleTextBox.Text.Trim().Length > 0 && SampleTextBox.Text != null)
+			if (!String.IsNullOrEmpty(SampleTextBox.Text))
 			{
-				// Foo(SampleTextBox.Text.Trim());
-				SampleTextBox.Clear();
+				MessageBox.Show(EmailCounter.CheckDomain(SampleTextBox.Text.Trim()).ToString());
 			}
 			else
-				SampleTextBox.Clear();
+			{
+			}
 		}
 
         private void UniqueTextBox_TextChanged(object sender, EventArgs e)

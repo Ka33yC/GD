@@ -8,7 +8,7 @@ namespace GD
 {
 	class EmailCounter
 	{
-		public static List<string> GetUniqueEmails(string[] words)
+		public static List<string> GetAllEmails(string[] words)
 		{
 			List<string> emails = new List<string>();
 
@@ -31,6 +31,14 @@ namespace GD
 			}
 
 			return emails;
+		}
+
+		public static bool CheckDomain(string domain)
+		{
+			int domainLength = domain.Length;
+			if (domain.Length < 2 || domain[0] != '@') return false;
+
+			return CheckRightPart(domain.Substring(1, domainLength - 1));
 		}
 
 		private static bool CheckLeftPart(string partToCheck)
