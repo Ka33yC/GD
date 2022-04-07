@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "2St9rX9N3u6lECL4p4uWrFlQqp7w6mNt5hpDvnsCoFdcnosIAtlE9qh9C01qjSZklvcp5vaL6EJVhJOFhzQB9g==",
+  "success": true,
+  "projectFilePath": "E:\\VisualVuz\\GD\\GD.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Nikita\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}
