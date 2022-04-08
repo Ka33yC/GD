@@ -29,136 +29,135 @@ namespace GD
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.LoadTextFromFileButton = new System.Windows.Forms.Button();
-			this.SourseTextBox = new System.Windows.Forms.RichTextBox();
+			this.loadTextFromFileButton = new System.Windows.Forms.Button();
+			this.sourseTextBox = new System.Windows.Forms.RichTextBox();
 			this.labelSourse = new System.Windows.Forms.Label();
-			this.UniqueTextBox = new System.Windows.Forms.RichTextBox();
+			this.uniqueTextBox = new System.Windows.Forms.RichTextBox();
 			this.labelUnique = new System.Windows.Forms.Label();
-			this.FindUniqueMailsButton = new System.Windows.Forms.Button();
-			this.SaveMailsToFileButton = new System.Windows.Forms.Button();
+			this.findUniqueMailsButton = new System.Windows.Forms.Button();
+			this.saveMailsToFileButton = new System.Windows.Forms.Button();
 			this.openFileWithEmail = new System.Windows.Forms.OpenFileDialog();
-			this.NumbersOfSourseMailsLabel = new System.Windows.Forms.Label();
-			this.NumbersOfUniqueMailsLabel = new System.Windows.Forms.Label();
-			this.SampleTextBox = new System.Windows.Forms.TextBox();
-			this.SetSampleButton = new System.Windows.Forms.Button();
+			this.numbersOfSourseMailsLabel = new System.Windows.Forms.Label();
+			this.numbersOfUniqueMailsLabel = new System.Windows.Forms.Label();
+			this.domainsTemplateTextBox = new System.Windows.Forms.TextBox();
+			this.setSampleButton = new System.Windows.Forms.Button();
 			this.SampleLabel = new System.Windows.Forms.Label();
-			this.ResetSampleButton = new System.Windows.Forms.Button();
+			this.resetSampleButton = new System.Windows.Forms.Button();
 			this.saveEmailsToFile = new System.Windows.Forms.SaveFileDialog();
 			this.SuspendLayout();
 			// 
-			// LoadTextFromFileButton
+			// loadTextFromFileButton
 			// 
-			this.LoadTextFromFileButton.Location = new System.Drawing.Point(24, 260);
-			this.LoadTextFromFileButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.LoadTextFromFileButton.Name = "LoadTextFromFileButton";
-			this.LoadTextFromFileButton.Size = new System.Drawing.Size(133, 47);
-			this.LoadTextFromFileButton.TabIndex = 0;
-			this.LoadTextFromFileButton.Text = "Загрузить текст из файла";
-			this.LoadTextFromFileButton.UseVisualStyleBackColor = true;
-			this.LoadTextFromFileButton.Click += new System.EventHandler(this.LoadTextFromFileButton_Click);
+			this.loadTextFromFileButton.Location = new System.Drawing.Point(24, 260);
+			this.loadTextFromFileButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.loadTextFromFileButton.Name = "loadTextFromFileButton";
+			this.loadTextFromFileButton.Size = new System.Drawing.Size(133, 47);
+			this.loadTextFromFileButton.TabIndex = 0;
+			this.loadTextFromFileButton.Text = "Загрузить текст из файла";
+			this.loadTextFromFileButton.UseVisualStyleBackColor = true;
+			this.loadTextFromFileButton.Click += new System.EventHandler(this.LoadTextFromFileButton_Click);
 			// 
-			// SourseTextBox
+			// sourseTextBox
 			// 
-			this.SourseTextBox.Location = new System.Drawing.Point(24, 33);
-			this.SourseTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.SourseTextBox.Name = "SourseTextBox";
-			this.SourseTextBox.Size = new System.Drawing.Size(293, 176);
-			this.SourseTextBox.TabIndex = 1;
-			this.SourseTextBox.Text = "";
+			this.sourseTextBox.Location = new System.Drawing.Point(24, 33);
+			this.sourseTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.sourseTextBox.Name = "sourseTextBox";
+			this.sourseTextBox.Size = new System.Drawing.Size(293, 176);
+			this.sourseTextBox.TabIndex = 1;
+			this.sourseTextBox.Text = "";
 			// 
 			// labelSourse
 			// 
 			this.labelSourse.AutoSize = true;
-			this.labelSourse.Location = new System.Drawing.Point(95, 7);
+			this.labelSourse.Location = new System.Drawing.Point(128, 7);
 			this.labelSourse.Name = "labelSourse";
 			this.labelSourse.Size = new System.Drawing.Size(95, 15);
 			this.labelSourse.TabIndex = 2;
 			this.labelSourse.Text = "Исходный текст";
 			// 
-			// UniqueTextBox
+			// uniqueTextBox
 			// 
-			this.UniqueTextBox.Location = new System.Drawing.Point(384, 33);
-			this.UniqueTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.UniqueTextBox.Name = "UniqueTextBox";
-			this.UniqueTextBox.ReadOnly = true;
-			this.UniqueTextBox.Size = new System.Drawing.Size(293, 176);
-			this.UniqueTextBox.TabIndex = 3;
-			this.UniqueTextBox.Text = "";
-			this.UniqueTextBox.TextChanged += new System.EventHandler(this.UniqueTextBox_TextChanged);
+			this.uniqueTextBox.Location = new System.Drawing.Point(384, 33);
+			this.uniqueTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.uniqueTextBox.Name = "uniqueTextBox";
+			this.uniqueTextBox.ReadOnly = true;
+			this.uniqueTextBox.Size = new System.Drawing.Size(293, 176);
+			this.uniqueTextBox.TabIndex = 3;
+			this.uniqueTextBox.Text = "";
 			// 
 			// labelUnique
 			// 
 			this.labelUnique.AutoSize = true;
-			this.labelUnique.Location = new System.Drawing.Point(438, 7);
+			this.labelUnique.Location = new System.Drawing.Point(470, 7);
 			this.labelUnique.Name = "labelUnique";
 			this.labelUnique.Size = new System.Drawing.Size(124, 15);
 			this.labelUnique.TabIndex = 4;
 			this.labelUnique.Text = "Уникальные e-mail\'ы";
 			// 
-			// FindUniqueMailsButton
+			// findUniqueMailsButton
 			// 
-			this.FindUniqueMailsButton.Location = new System.Drawing.Point(183, 260);
-			this.FindUniqueMailsButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.FindUniqueMailsButton.Name = "FindUniqueMailsButton";
-			this.FindUniqueMailsButton.Size = new System.Drawing.Size(133, 47);
-			this.FindUniqueMailsButton.TabIndex = 6;
-			this.FindUniqueMailsButton.Text = "Найти уникальные e-mail\'ы";
-			this.FindUniqueMailsButton.UseVisualStyleBackColor = true;
-			this.FindUniqueMailsButton.Click += new System.EventHandler(this.FindUniqueMailsButton_Click);
+			this.findUniqueMailsButton.Location = new System.Drawing.Point(183, 260);
+			this.findUniqueMailsButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.findUniqueMailsButton.Name = "findUniqueMailsButton";
+			this.findUniqueMailsButton.Size = new System.Drawing.Size(133, 47);
+			this.findUniqueMailsButton.TabIndex = 6;
+			this.findUniqueMailsButton.Text = "Найти уникальные e-mail\'ы";
+			this.findUniqueMailsButton.UseVisualStyleBackColor = true;
+			this.findUniqueMailsButton.Click += new System.EventHandler(this.FindUniqueMailsButton_Click);
 			// 
-			// SaveMailsToFileButton
+			// saveMailsToFileButton
 			// 
-			this.SaveMailsToFileButton.Location = new System.Drawing.Point(470, 260);
-			this.SaveMailsToFileButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.SaveMailsToFileButton.Name = "SaveMailsToFileButton";
-			this.SaveMailsToFileButton.Size = new System.Drawing.Size(133, 47);
-			this.SaveMailsToFileButton.TabIndex = 7;
-			this.SaveMailsToFileButton.Text = "Сохранить e-mail\'ы в файл\r\n";
-			this.SaveMailsToFileButton.UseVisualStyleBackColor = true;
-			this.SaveMailsToFileButton.Click += new System.EventHandler(this.SaveMailsToFileButton_Click);
+			this.saveMailsToFileButton.Location = new System.Drawing.Point(470, 260);
+			this.saveMailsToFileButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.saveMailsToFileButton.Name = "saveMailsToFileButton";
+			this.saveMailsToFileButton.Size = new System.Drawing.Size(133, 47);
+			this.saveMailsToFileButton.TabIndex = 7;
+			this.saveMailsToFileButton.Text = "Сохранить e-mail\'ы в файл\r\n";
+			this.saveMailsToFileButton.UseVisualStyleBackColor = true;
+			this.saveMailsToFileButton.Click += new System.EventHandler(this.SaveMailsToFileButton_Click);
 			// 
 			// openFileWithEmail
 			// 
 			this.openFileWithEmail.FileName = "email.txt";
 			this.openFileWithEmail.Filter = "txt files (*.txt)|*.txt*";
 			// 
-			// NumbersOfSourseMailsLabel
+			// numbersOfSourseMailsLabel
 			// 
-			this.NumbersOfSourseMailsLabel.AutoSize = true;
-			this.NumbersOfSourseMailsLabel.Location = new System.Drawing.Point(24, 230);
-			this.NumbersOfSourseMailsLabel.Name = "NumbersOfSourseMailsLabel";
-			this.NumbersOfSourseMailsLabel.Size = new System.Drawing.Size(128, 15);
-			this.NumbersOfSourseMailsLabel.TabIndex = 9;
-			this.NumbersOfSourseMailsLabel.Text = "Количество e-mail\'ов:";
+			this.numbersOfSourseMailsLabel.AutoSize = true;
+			this.numbersOfSourseMailsLabel.Location = new System.Drawing.Point(24, 230);
+			this.numbersOfSourseMailsLabel.Name = "numbersOfSourseMailsLabel";
+			this.numbersOfSourseMailsLabel.Size = new System.Drawing.Size(128, 15);
+			this.numbersOfSourseMailsLabel.TabIndex = 9;
+			this.numbersOfSourseMailsLabel.Text = "Количество e-mail\'ов:";
 			// 
-			// NumbersOfUniqueMailsLabel
+			// numbersOfUniqueMailsLabel
 			// 
-			this.NumbersOfUniqueMailsLabel.AutoSize = true;
-			this.NumbersOfUniqueMailsLabel.Location = new System.Drawing.Point(384, 230);
-			this.NumbersOfUniqueMailsLabel.Name = "NumbersOfUniqueMailsLabel";
-			this.NumbersOfUniqueMailsLabel.Size = new System.Drawing.Size(128, 15);
-			this.NumbersOfUniqueMailsLabel.TabIndex = 10;
-			this.NumbersOfUniqueMailsLabel.Text = "Количество e-mail\'ов:";
+			this.numbersOfUniqueMailsLabel.AutoSize = true;
+			this.numbersOfUniqueMailsLabel.Location = new System.Drawing.Point(384, 230);
+			this.numbersOfUniqueMailsLabel.Name = "numbersOfUniqueMailsLabel";
+			this.numbersOfUniqueMailsLabel.Size = new System.Drawing.Size(128, 15);
+			this.numbersOfUniqueMailsLabel.TabIndex = 10;
+			this.numbersOfUniqueMailsLabel.Text = "Количество e-mail\'ов:";
 			// 
-			// SampleTextBox
+			// domainsTemplateTextBox
 			// 
-			this.SampleTextBox.Location = new System.Drawing.Point(89, 328);
-			this.SampleTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.SampleTextBox.Name = "SampleTextBox";
-			this.SampleTextBox.PlaceholderText = "@gmail.com, @mail.ru";
-			this.SampleTextBox.Size = new System.Drawing.Size(134, 23);
-			this.SampleTextBox.TabIndex = 11;
+			this.domainsTemplateTextBox.Location = new System.Drawing.Point(89, 328);
+			this.domainsTemplateTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.domainsTemplateTextBox.Name = "domainsTemplateTextBox";
+			this.domainsTemplateTextBox.PlaceholderText = "@gmail.com, @mail.ru";
+			this.domainsTemplateTextBox.Size = new System.Drawing.Size(134, 23);
+			this.domainsTemplateTextBox.TabIndex = 11;
 			// 
-			// SetSampleButton
+			// setSampleButton
 			// 
-			this.SetSampleButton.Location = new System.Drawing.Point(228, 323);
-			this.SetSampleButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.SetSampleButton.Name = "SetSampleButton";
-			this.SetSampleButton.Size = new System.Drawing.Size(88, 31);
-			this.SetSampleButton.TabIndex = 12;
-			this.SetSampleButton.Text = "Применить";
-			this.SetSampleButton.UseVisualStyleBackColor = true;
-			this.SetSampleButton.Click += new System.EventHandler(this.SetSampleButton_Click);
+			this.setSampleButton.Location = new System.Drawing.Point(228, 323);
+			this.setSampleButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.setSampleButton.Name = "setSampleButton";
+			this.setSampleButton.Size = new System.Drawing.Size(88, 31);
+			this.setSampleButton.TabIndex = 12;
+			this.setSampleButton.Text = "Применить";
+			this.setSampleButton.UseVisualStyleBackColor = true;
+			this.setSampleButton.Click += new System.EventHandler(this.SetSampleButton_Click);
 			// 
 			// SampleLabel
 			// 
@@ -169,16 +168,15 @@ namespace GD
 			this.SampleLabel.TabIndex = 13;
 			this.SampleLabel.Text = "Шаблон:";
 			// 
-			// ResetSampleButton
+			// resetSampleButton
 			// 
-			this.ResetSampleButton.Location = new System.Drawing.Point(322, 323);
-			this.ResetSampleButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.ResetSampleButton.Name = "ResetSampleButton";
-			this.ResetSampleButton.Size = new System.Drawing.Size(88, 31);
-			this.ResetSampleButton.TabIndex = 14;
-			this.ResetSampleButton.Text = "Сбросить";
-			this.ResetSampleButton.UseVisualStyleBackColor = true;
-			this.ResetSampleButton.Click += new System.EventHandler(this.ResetSampleButton_Click);
+			this.resetSampleButton.Location = new System.Drawing.Point(322, 323);
+			this.resetSampleButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.resetSampleButton.Name = "resetSampleButton";
+			this.resetSampleButton.Size = new System.Drawing.Size(88, 31);
+			this.resetSampleButton.TabIndex = 14;
+			this.resetSampleButton.Text = "Сбросить";
+			this.resetSampleButton.UseVisualStyleBackColor = true;
 			// 
 			// saveEmailsToFile
 			// 
@@ -186,26 +184,26 @@ namespace GD
 			this.saveEmailsToFile.ShowHelp = true;
 			this.saveEmailsToFile.Title = "Сохранить текст как.";
 			// 
-			// FindMailsInTheText
+			// FindMailsInTheTextForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(700, 372);
-			this.Controls.Add(this.ResetSampleButton);
+			this.Controls.Add(this.resetSampleButton);
 			this.Controls.Add(this.SampleLabel);
-			this.Controls.Add(this.SetSampleButton);
-			this.Controls.Add(this.SampleTextBox);
-			this.Controls.Add(this.NumbersOfUniqueMailsLabel);
-			this.Controls.Add(this.NumbersOfSourseMailsLabel);
-			this.Controls.Add(this.SaveMailsToFileButton);
-			this.Controls.Add(this.FindUniqueMailsButton);
+			this.Controls.Add(this.setSampleButton);
+			this.Controls.Add(this.domainsTemplateTextBox);
+			this.Controls.Add(this.numbersOfUniqueMailsLabel);
+			this.Controls.Add(this.numbersOfSourseMailsLabel);
+			this.Controls.Add(this.saveMailsToFileButton);
+			this.Controls.Add(this.findUniqueMailsButton);
 			this.Controls.Add(this.labelUnique);
-			this.Controls.Add(this.UniqueTextBox);
+			this.Controls.Add(this.uniqueTextBox);
 			this.Controls.Add(this.labelSourse);
-			this.Controls.Add(this.SourseTextBox);
-			this.Controls.Add(this.LoadTextFromFileButton);
+			this.Controls.Add(this.sourseTextBox);
+			this.Controls.Add(this.loadTextFromFileButton);
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.Name = "FindMailsInTheText";
+			this.Name = "FindMailsInTheTextForm";
 			this.Text = "FindMailsInTheText";
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -214,20 +212,20 @@ namespace GD
 
         #endregion
 
-        private System.Windows.Forms.Button LoadTextFromFileButton;
-        private System.Windows.Forms.RichTextBox SourseTextBox;
+        private System.Windows.Forms.Button loadTextFromFileButton;
+        private System.Windows.Forms.RichTextBox sourseTextBox;
         private System.Windows.Forms.Label labelSourse;
-        private System.Windows.Forms.RichTextBox UniqueTextBox;
+        private System.Windows.Forms.RichTextBox uniqueTextBox;
         private System.Windows.Forms.Label labelUnique;
-        private System.Windows.Forms.Button FindUniqueMailsButton;
-        private System.Windows.Forms.Button SaveMailsToFileButton;
+        private System.Windows.Forms.Button findUniqueMailsButton;
+        private System.Windows.Forms.Button saveMailsToFileButton;
         private System.Windows.Forms.OpenFileDialog openFileWithEmail;
-        private System.Windows.Forms.Label NumbersOfSourseMailsLabel;
-        private System.Windows.Forms.Label NumbersOfUniqueMailsLabel;
-        private System.Windows.Forms.TextBox SampleTextBox;
-        private System.Windows.Forms.Button SetSampleButton;
+        private System.Windows.Forms.Label numbersOfSourseMailsLabel;
+        private System.Windows.Forms.Label numbersOfUniqueMailsLabel;
+        private System.Windows.Forms.TextBox domainsTemplateTextBox;
+        private System.Windows.Forms.Button setSampleButton;
         private System.Windows.Forms.Label SampleLabel;
-        private System.Windows.Forms.Button ResetSampleButton;
+        private System.Windows.Forms.Button resetSampleButton;
 		private System.Windows.Forms.SaveFileDialog saveEmailsToFile;
 	}
 }

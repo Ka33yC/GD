@@ -20,6 +20,30 @@ namespace GD
 			return CheckLeftPart(leftPart) && CheckRightPart(rightPart);
 		}
 
+		/// <returns>Домен из email вместе с @. Вернёт null, если переданный email не содержит домен или домен неверный</returns>
+		public static string GetDomain(string email)
+		{
+			string[] parts = email.Split("@");
+			string domain = null;
+			if (parts.Length == 2 && CheckRightPart(parts[1]))
+			{
+				domain = "@" + parts[1];
+			}
+
+			return domain;
+		}
+
+		/// <param name="domain">Должен содержать @. Если её не будет, то это не домен</param>
+		/// <returns></returns>
+		public static bool IsDomain(string domain)
+		{
+			int domainLength = domain.Length;
+
+			return domain.Length > 4 && domain[0] == '@' &&
+				CheckRightPart(domain.Substring(1, domainLength - 1));
+		}
+
+		/// <returns>Структуру данных, содержащую эмейлы среди всех найденых в words</returns>
 		public static IEnumerable<string> GetAllEmails(IEnumerable<string> words)
 		{
 			var emails = from mightEmails in words
@@ -28,18 +52,36 @@ namespace GD
 			return emails;
 		}
 
+		/// <returns>Структуру данных, содержащую только уникальные эмейлы среди всех найденых в words</returns>
 		public static IEnumerable<string> GetUniqueEmails(IEnumerable<string> words)
 		{
 			// ToHashSet - потому что он хранит уникальные значения
 			return GetAllEmails(words).ToHashSet();
 		}
 
-		public static bool IsDomain(string domain)
+		/// <returns>Структура данных, содержащая только уникальные эмейлы среди всех найденых в words с доменами, 
+		/// содержащимися в domains</returns>
+		public static IEnumerable<string> GetUniqueEmails(IEnumerable<string> words, IEnumerable<string> domains)
 		{
-			int domainLength = domain.Length;
+			// Получаем все эмейлы
+			var allUniqueEmails = GetUniqueEmails(words);
+			// Фильтруем их по параметру содержания домена в domains
+			IEnumerable<string> filteredEmails = from email in allUniqueEmails
+										  where domains.Contains(GetDomain(email))
+										  select email;
+			
+			return filteredEmails;
+		}
 
-			return domain.Length > 4 && domain[0] == '@' && 
-				CheckRightPart(domain.Substring(1, domainLength - 1));
+		/// <param name="mightDomains">Домены к проверке</param>
+		/// <returns>Структура данных, содержащая только домены в правильном формате</returns>
+		public static IEnumerable<string> GetCorrectDomains(IEnumerable<string> mightDomains) 
+		{
+			var domains = from mightDomain in mightDomains
+						  where IsDomain(mightDomain)
+						  select mightDomain;
+
+			return domains;
 		}
 
 		private static bool CheckLeftPart(string partToCheck)
