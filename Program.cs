@@ -17,7 +17,7 @@ namespace GD
 			Application.SetHighDpiMode(HighDpiMode.SystemAware);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FindMailsInTheText());
+			Application.Run(new FindMailsInTheTextForm());
 		}
 	}
 }

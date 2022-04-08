@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text;
 
 namespace GD
 {
-	public partial class FindMailsInTheText : Form
+	public partial class FindMailsInTheTextForm : Form
 	{
-		string mainText = null;
-		public FindMailsInTheText()
+		// Это поле во-первых, не нужно, во-вторых, не соответсвует правилу кодирования
+		//string mainText = null;
+		char[] _separators = new char[] { ' ', ',', ':', ';', '-', '=', '!', '?', '/', 
+			'\\', '|', '*', '$', '%', '^', '\r', '\n' };
+		public FindMailsInTheTextForm()
 		{
 			InitializeComponent();
 		}
 
 		private void LoadTextFromFileButton_Click(object sender, EventArgs e)
 		{
-			var dialog = openFileDialog1.ShowDialog();
+			var dialog = openFileWithEmail.ShowDialog();
 			if (dialog == DialogResult.OK || dialog == DialogResult.Yes)
 			{
-				string fileName = openFileDialog1.FileName;
+				string fileName = openFileWithEmail.FileName;
 				CheckFile(fileName);
 			}
 		}
@@ -32,11 +31,12 @@ namespace GD
 		private void CheckFile(string fileName)
         {
 			string textFromFile = Path.GetExtension(fileName);
-			if (textFromFile != ".txt")
-			{
-				MessageBox.Show("Файл должен иметь расширение '.txt'");
-				return;
-			}
+			// Этот код не нужен. Поставил фильтр у openFileDialog 
+			//if (textFromFile != ".txt")
+			//{
+			//	MessageBox.Show("Файл должен иметь расширение '.txt'");
+			//	return;
+			//}
 			try
 			{
 				using (StreamReader reader = new StreamReader(fileName))
@@ -44,27 +44,24 @@ namespace GD
 					textFromFile = reader.ReadToEnd();
 				}
 			}
-			catch (Exception)
+			// внизу ты выводишь эксепшен, а тут нет -______-
+			catch (Exception ex)
 			{
-				MessageBox.Show("Ошибка при открытии файла!");
+				MessageBox.Show($"Ошибка при открытии файла! {ex.Message}");
 				return;
 			}
 
-			mainText = textFromFile;
 			//Вывожу текст на экран
 			DisplayTextFromFile(textFromFile);
 			//DisplayuniqueMails(textFromFile);
 
-			//разбиваю текст на части
-			SplitTheText(textFromFile);
+			// Непонятно зачем ты эту функцию вызываешь она возвращает резуьтат работы, который в пустоту уходит
+			// SplitTheText(textFromFile);
 		}
 
-		private void DisplayTextFromFile(string text)
-        {
-			SourseTextBox.Text = text.Trim();
-        }
-
-		private void DisplayuniqueMails(string text)
+		private void DisplayTextFromFile(string text) => SourseTextBox.Text = text.Trim();
+        
+		private void DisplayUniqueMails(string text)
 		{
 			UniqueTextBox.Clear();
 			UniqueTextBox.Text = text.Trim();
@@ -72,52 +69,63 @@ namespace GD
 
 		private string[] SplitTheText(string text)
 		{
-			char[] separators = new char[] { ' ', ',', ':', ';', '-', '=', '!', '?', '/', '\\', '|', '*', '$', '%', '^', '\r', '\n' };
-			string[] splitedText = text.Trim().Split(separators, StringSplitOptions.TrimEntries);
+			string[] splitedText = text.Trim().Split(_separators, StringSplitOptions.TrimEntries);
 			return splitedText;
 		}
 
         private void FindUniqueMailsButton_Click(object sender, EventArgs e)
         {
-			if (SourseTextBox.Text == null)
-				return;
-			string[] splitted = SplitTheText(SourseTextBox.Text);
-			List<string> listOfUniqueMails = EmailCounter.GetAllEmails(splitted);
-			string NotListOfUniqueMails = "";
-			foreach (string s in listOfUniqueMails)
-				NotListOfUniqueMails += s + "\n";
+			// Text вроде не может быть null, даже если может, лучше проверять не пустая ли строка и !null
+			if (String.IsNullOrEmpty(SourseTextBox.Text)) return;
 
-			DisplayuniqueMails(NotListOfUniqueMails);
+			string[] words = SplitTheText(SourseTextBox.Text);
 
-			SetNumbersOfSourseMails(listOfUniqueMails.Count());
+			var listOfAllMails = EmailCounter.GetAllEmails(words);
+			var listOfUniqueMails = EmailCounter.GetUniqueEmails(listOfAllMails);
+
+			// почему переменная названа с большой буквы?
+			// а также она не отображает того, что функция возвращает
+			// а также {} нужно ставить. Их можно не ставить только если как в 76й строке - return
+			// А также тут ты непрерывно конкатенируешь строки. Нельзя это оставлять в стринге,
+			// ты будешь генерировать очень много мусора. Нужно использовать StringBuilder, он оптимальнее
+			StringBuilder uniqueMailsText = new StringBuilder();
+			foreach (string mail in listOfUniqueMails)
+			{
+				uniqueMailsText.Append(mail);
+				uniqueMailsText.Append("\n");
+			}
+
+			DisplayUniqueMails(uniqueMailsText.ToString());
+
+			SetNumbersOfSourseMails(listOfAllMails.Count());
 			SetNumbersOfUniqueMails(listOfUniqueMails.Count());
 		}
 
         private void SaveMailsToFileButton_Click(object sender, EventArgs e)
         {
-			if (UniqueTextBox.Text != null && UniqueTextBox.Text.Trim().Length > 0)
+			// Проверка говно. В UniqueTextBox никогда не будет null и даже если стркоа будет пустой,
+			// то пусть юзер решает, что ему записывать в файл, а что - нет
+			if (String.IsNullOrEmpty(UniqueTextBox.Text)) return;
+			// Зачем ты создаёшь SaveFileDialog -____- я его создал единожды в форме
+			//SaveFileDialog sfd = new SaveFileDialog();
+			//sfd.Title = "Сохранить текст как...";
+			//sfd.OverwritePrompt = true;
+			//sfd.CheckPathExists = true;
+			//sfd.Filter = "Txt Files(*.txt)|*.txt";
+			//sfd.ShowHelp = true;
+			DialogResult dialogResult = saveEmailsToFile.ShowDialog();
+			if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes) return;
+			
+			try
 			{
-				SaveFileDialog sfd = new SaveFileDialog();
-				sfd.Title = "Сохранить текст как...";
-				sfd.OverwritePrompt = true;
-				sfd.CheckPathExists = true;
-				sfd.Filter = "Txt Files(*.txt)|*.txt";
-				sfd.ShowHelp = true;
-
-				if (sfd.ShowDialog() == DialogResult.OK)
+				using (StreamWriter writer = new StreamWriter(saveEmailsToFile.FileName))
 				{
-					try
-					{
-						using (StreamWriter writer = new StreamWriter(sfd.FileName, true)) // дозапись
-						{
-							writer.Write(UniqueTextBox.Text);
-						}
-					}
-					catch (Exception ex)
-					{
-						MessageBox.Show($"Невозможно записать данные в файл\n{ex}");
-					}
+					writer.Write(UniqueTextBox.Text);
 				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Невозможно записать данные в файл. {ex.Message}");
 			}
 		}
 
@@ -133,28 +141,24 @@ namespace GD
 
         private void SetSampleButton_Click(object sender, EventArgs e)
         {
-			if (!String.IsNullOrEmpty(SampleTextBox.Text))
-			{
-				char[] separators = new char[] { ' ', ',', '\r', '\n' };
-				string[] splitedText = SampleTextBox.Text.Trim().Split(separators, StringSplitOptions.TrimEntries);
+			if (String.IsNullOrEmpty(SampleTextBox.Text)) return;
+			
+			char[] separators = new char[] { ' ', ',', '\r', '\n' };
+			string[] splitedText = SampleTextBox.Text.Trim().Split(separators, StringSplitOptions.TrimEntries);
 
-				List<string> trueDomains = new List<string>();
-				foreach (string s in splitedText)
+			List<string> trueDomains = new List<string>();
+			foreach (string s in splitedText)
+            {
+				if (EmailCounter.IsDomain(s))
                 {
-					if (EmailCounter.CheckDomain(s))
-                    {
-						trueDomains.Add(s);
-					}
-                }
+					trueDomains.Add(s);
+				}
+            }
 
-				SampleTextBox.Clear();
-				foreach (string s in trueDomains)
-					SampleTextBox.Text += s + ", ";
-
-				//Foo(trueDomains.ToArray());
-			}
-			else
+			SampleTextBox.Clear();
+			foreach (string s in trueDomains)
 			{
+				SampleTextBox.Text += s + ", ";
 			}
 		}
 
@@ -166,8 +170,6 @@ namespace GD
         private void ResetSampleButton_Click(object sender, EventArgs e)
         {
 			SampleTextBox.Clear();
-			//очистить заданные шаблоны мейлов
-			//Foo();
 		}
     }
 }
