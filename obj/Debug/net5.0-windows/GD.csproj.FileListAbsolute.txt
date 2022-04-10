@@ -15,7 +15,6 @@ C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\ref\GD.dll
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.pdb
 C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.genruntimeconfig.cache
-C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.FindMailsInTheText.resources
 E:\VisualVuz\GD\bin\Debug\net5.0-windows\GD.exe
 E:\VisualVuz\GD\bin\Debug\net5.0-windows\GD.deps.json
 E:\VisualVuz\GD\bin\Debug\net5.0-windows\GD.runtimeconfig.json
@@ -34,3 +33,6 @@ E:\VisualVuz\GD\obj\Debug\net5.0-windows\GD.dll
 E:\VisualVuz\GD\obj\Debug\net5.0-windows\ref\GD.dll
 E:\VisualVuz\GD\obj\Debug\net5.0-windows\GD.pdb
 E:\VisualVuz\GD\obj\Debug\net5.0-windows\GD.genruntimeconfig.cache
+C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.FindMailsInTheTextForm.resources
+C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.Properties.Resources.resources
+C:\Users\Олег\OneDrive\Документы\GitHub\GD\obj\Debug\net5.0-windows\GD.SplashScreen.resources

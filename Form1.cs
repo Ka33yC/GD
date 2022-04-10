@@ -12,6 +12,7 @@ namespace GD
 		char[] _separators = new char[] { ' ', ',', ':', ';', '-', '=', '!', '?', '/', 
 			'\\', '|', '*', '$', '%', '^', '\r', '\n' };
 
+		bool isWorking = false;
 
 		public FindMailsInTheTextForm()
 		{
@@ -20,11 +21,19 @@ namespace GD
 
 		private void LoadTextFromFileButton_Click(object sender, EventArgs e)
 		{
+			isWorking = true;
+
 			var dialog = openFileWithEmail.ShowDialog();
-			if (dialog != DialogResult.OK && dialog != DialogResult.Yes) return;
+			if (dialog != DialogResult.OK && dialog != DialogResult.Yes)
+			{
+				isWorking = false;
+				return;
+			}
 			
 			string fileName = openFileWithEmail.FileName;
 			DisplayTextFromFile(fileName);
+
+			isWorking = false;
 		}
 
 		private void DisplayTextFromFile(string fileName)
@@ -52,7 +61,13 @@ namespace GD
 
         private void FindUniqueMailsButton_Click(object sender, EventArgs e)
         {
-			if (String.IsNullOrEmpty(sourseTextBox.Text)) return;
+			if (String.IsNullOrEmpty(sourseTextBox.Text))
+			{
+				MessageBox.Show("Вы не ввели текст!");
+				return;
+			}
+			
+			isWorking = true;
 
 			string[] words = SplitTheText(sourseTextBox.Text);
 
@@ -63,6 +78,8 @@ namespace GD
 
 			SetNumbersOfSourseMails(listOfAllMails.Count());
 			SetNumbersOfUniqueMails(listOfUniqueMails.Count());
+
+			isWorking = false;
 		}
 
 		private void SetNumbersOfSourseMails(int number)
@@ -93,7 +110,11 @@ namespace GD
 
 		private void SetSampleButton_Click(object sender, EventArgs e)
 		{
-			if (String.IsNullOrEmpty(domainsTemplateTextBox.Text)) return;
+			if (String.IsNullOrEmpty(domainsTemplateTextBox.Text))
+			{
+				MessageBox.Show("Вы не заполнили поле!");
+				return;
+			}
 
 			char[] separators = new char[] { ' ', ',', '\r', '\n' };
 			string[] splitedDomainsTemplate = domainsTemplateTextBox.Text.Trim().Split(separators);
@@ -102,18 +123,34 @@ namespace GD
 
 			SetDomainsTemplateText(domains);
 
-			var listOfUniqueEmails = uniqueTextBox.Text.Split('\n');
-			var filteredEmails = EmailCounter.GetUniqueEmails(listOfUniqueEmails, domains);
+			if (String.IsNullOrEmpty(sourseTextBox.Text)) return;
+
+			string[] words = SplitTheText(sourseTextBox.Text);
+
+			var listOfAllMails = EmailCounter.GetAllEmails(words);
+			var filteredEmails = EmailCounter.GetUniqueEmails(listOfAllMails, domains);
 
 			SetEmailsToUniqueEmailsText(filteredEmails);
+
+			SetNumbersOfSourseMails(listOfAllMails.Count());
+			SetNumbersOfUniqueMails(filteredEmails.Count());
 		}
 
 		private void SaveMailsToFileButton_Click(object sender, EventArgs e)
         {
-			if (String.IsNullOrEmpty(uniqueTextBox.Text)) return;
+			if (String.IsNullOrEmpty(uniqueTextBox.Text))
+			{
+				MessageBox.Show("Недостаточно данных для сохранения!");
+				return;
+			}
 
+			isWorking = true;
 			DialogResult dialogResult = saveEmailsToFile.ShowDialog();
-			if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes) return;
+			if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
+			{
+				isWorking = false;
+				return;
+			}
 			
 			try
 			{
@@ -125,6 +162,10 @@ namespace GD
 			catch (Exception ex)
 			{
 				MessageBox.Show($"Невозможно записать данные в файл. {ex.Message}");
+			}
+			finally
+            {
+				isWorking = false;
 			}
 		}
 
@@ -149,6 +190,33 @@ namespace GD
 			}
 
 			domainsTemplateTextBox.Text = uniqueDomainsText.ToString();
+		}
+
+        private void resetSampleButton_Click(object sender, EventArgs e)
+        {
+			isWorking = true;
+			domainsTemplateTextBox.Clear();
+			uniqueTextBox.Clear();
+			SetNumbersOfUniqueMails(0);
+			isWorking = false;
+		}
+
+		private void Form_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (isWorking)
+			{
+				MessageBox.Show("Вы не можете закрыть программу во время работы!");
+				e.Cancel = true;
+			}
+			else
+			{
+				Application.Exit();
+			}
+		}
+
+        private void FindMailsInTheTextForm_Load(object sender, EventArgs e)
+        {
+
 		}
 	}
 }
