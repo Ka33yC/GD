@@ -112,7 +112,7 @@ namespace GD
 		{
 			if (String.IsNullOrEmpty(domainsTemplateTextBox.Text))
 			{
-				MessageBox.Show("Вы не заполнили поле!");
+				MessageBox.Show("Вы не заполнили поле шаблона!");
 				return;
 			}
 
@@ -123,8 +123,13 @@ namespace GD
 
 			SetDomainsTemplateText(domains);
 
-			if (String.IsNullOrEmpty(sourseTextBox.Text)) return;
+			if (String.IsNullOrEmpty(sourseTextBox.Text))
+			{
+				MessageBox.Show("Вы не ввели текст!");
+				return;
+			}
 
+			if (domains.Count() < 1) return;
 			string[] words = SplitTheText(sourseTextBox.Text);
 
 			var listOfAllMails = EmailCounter.GetAllEmails(words);
