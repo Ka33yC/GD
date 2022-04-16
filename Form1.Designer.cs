@@ -29,6 +29,7 @@ namespace GD
 		/// </summary>
 		private void InitializeComponent()
 		{
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FindMailsInTheTextForm));
             this.loadTextFromFileButton = new System.Windows.Forms.Button();
             this.sourseTextBox = new System.Windows.Forms.RichTextBox();
             this.labelSourse = new System.Windows.Forms.Label();
@@ -195,6 +196,7 @@ namespace GD
             this.Controls.Add(this.labelSourse);
             this.Controls.Add(this.sourseTextBox);
             this.Controls.Add(this.loadTextFromFileButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FindMailsInTheTextForm";
             this.Text = "FindMailsInTheText";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
