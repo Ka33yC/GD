@@ -1,150 +1,227 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text;
 
 namespace GD
 {
-	public partial class FindMailsInTheText : Form
+	public partial class FindMailsInTheTextForm : Form
 	{
-		string textFromFile = null;
-		public FindMailsInTheText()
+		char[] _separators = new char[] { ' ', ',', ':', ';', '-', '=', '!', '?', '/', 
+			'\\', '|', '*', '$', '%', '^', '\r', '\n' };
+
+		bool isWorking = false;
+
+		public FindMailsInTheTextForm()
 		{
 			InitializeComponent();
 		}
 
 		private void LoadTextFromFileButton_Click(object sender, EventArgs e)
 		{
-			var dialog = openFileDialog1.ShowDialog();
-			if (dialog == DialogResult.OK || dialog == DialogResult.Yes)
-			{
-				string fileName = openFileDialog1.FileName;
-				CheckFile(fileName);
-			}
-		}
+			isWorking = true;
 
-		private void CheckFile(string fileName)
-        {
-			string fpath = Path.GetExtension(fileName);
-			if (fpath != ".txt")
+			var dialog = openFileWithEmail.ShowDialog();
+			if (dialog != DialogResult.OK && dialog != DialogResult.Yes)
 			{
-				MessageBox.Show("Файл должен иметь расширение '.txt'");
+				isWorking = false;
 				return;
 			}
+			
+			string fileName = openFileWithEmail.FileName;
+			DisplayTextFromFile(fileName);
+
+			isWorking = false;
+		}
+
+		private void DisplayTextFromFile(string fileName)
+        {
 			try
 			{
 				using (StreamReader reader = new StreamReader(fileName))
 				{
-					textFromFile = reader.ReadToEnd();
+					string textFromFile = reader.ReadToEnd().Trim();
+					sourseTextBox.Text = textFromFile;
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				MessageBox.Show("Ошибка при открытии файла!");
-				return;
+				MessageBox.Show($"Ошибка при открытии файла! {ex.Message}");
 			}
-
-			//Вывожу текст на экран
-			DisplayTextFromFile(textFromFile);
-			//DisplayuniqueMails(textFromFile);
-
-			//ПОТОМ УДАЛИТЬ
-			SetNumbersOfSourseMails(15);
-
-			//разбиваю текст на части
-			SplitTheText(textFromFile);
 		}
-
-		private void DisplayTextFromFile(string text)
-        {
-			SourseTextBox.Text = text.Trim();
-        }
-
-		private void DisplayuniqueMails(string text)
-		{
-			UniqueTextBox.Clear();
-			UniqueTextBox.Text = text.Trim();
-		}
+       
 
 		private string[] SplitTheText(string text)
 		{
-			char[] separators = new char[] { ' ', ',', ':', ';', '-', '=', '!', '?', '/', '\\', '|', '*', '$', '%', '^' };
-			string[] splitedText = text.Trim().Split(separators, StringSplitOptions.TrimEntries);
+			string[] splitedText = text.Trim().Split(_separators, StringSplitOptions.TrimEntries);
 			return splitedText;
 		}
 
         private void FindUniqueMailsButton_Click(object sender, EventArgs e)
         {
-			if (textFromFile == null)
-				return;
-
-			List<string> listOfUniqueMails = EmailCounter.GetUniqueEmails(SplitTheText(textFromFile));
-			string NotListOfUniqueMails = "";
-			foreach (string s in listOfUniqueMails)
-				NotListOfUniqueMails += s + "\n";
-
-			DisplayuniqueMails(NotListOfUniqueMails);
-
-		}
-
-        private void SaveMailsToFileButton_Click(object sender, EventArgs e)
-        {
-			if (UniqueTextBox.Text != null && UniqueTextBox.Text.Trim().Length > 0)
+			if (String.IsNullOrEmpty(sourseTextBox.Text))
 			{
-				SaveFileDialog sfd = new SaveFileDialog();
-				sfd.Title = "Сохранить текст как...";
-				sfd.OverwritePrompt = true;
-				sfd.CheckPathExists = true;
-				sfd.Filter = "Txt Files(*.txt)|*.txt";
-				sfd.ShowHelp = true;
-
-				if (sfd.ShowDialog() == DialogResult.OK)
-				{
-					try
-					{
-						using (StreamWriter writer = new StreamWriter(sfd.FileName, true)) // дозапись
-						{
-							writer.Write(UniqueTextBox.Text);
-						}
-					}
-					catch (Exception ex)
-					{
-						MessageBox.Show($"Невозможно записать данные в файл\n{ex}");
-					}
-				}
+				MessageBox.Show("Вы не ввели текст!");
+				return;
 			}
+			
+			isWorking = true;
+
+			string[] words = SplitTheText(sourseTextBox.Text);
+
+			var listOfAllMails = EmailCounter.GetAllEmails(words);
+			var listOfUniqueMails = EmailCounter.GetUniqueEmails(listOfAllMails);
+
+			SetEmailsToUniqueEmailsText(listOfUniqueMails);
+
+			SetNumbersOfSourseMails(listOfAllMails.Count());
+			SetNumbersOfUniqueMails(listOfUniqueMails.Count());
+
+			isWorking = false;
 		}
 
 		private void SetNumbersOfSourseMails(int number)
-        {
-			NumbersOfSourseMailsLabel.Text = $"Количество e-mail'ов: {number}";
+		{
+			numbersOfSourseMailsLabel.Text = $"Количество e-mail'ов: {number}";
 		}
 
 		private void SetNumbersOfUniqueMails(int number)
 		{
-			NumbersOfUniqueMailsLabel.Text = $"Количество e-mail'ов: {number}";
+			numbersOfUniqueMailsLabel.Text = $"Количество e-mail'ов: {number}";
 		}
 
-        private void SetSampleButton_Click(object sender, EventArgs e)
-        {
-			if (SampleTextBox.Text.Trim().Length > 0 && SampleTextBox.Text != null)
+		/// <summary>
+		/// Функция записывает emailsToSet через '\n' в uniqueTextBox
+		/// </summary>
+		/// <param name="emailsToSet">Эмейлы к записи</param>
+		private void SetEmailsToUniqueEmailsText(IEnumerable<string> emailsToSet)
+		{
+			StringBuilder uniqueEmailsText = new StringBuilder();
+			foreach (string email in emailsToSet)
 			{
-				// Foo(SampleTextBox.Text.Trim());
-				SampleTextBox.Clear();
+				uniqueEmailsText.Append(email);
+				uniqueEmailsText.Append('\n');
+			}
+
+			uniqueTextBox.Text = uniqueEmailsText.ToString().Trim();
+		}
+
+		private void SetSampleButton_Click(object sender, EventArgs e)
+		{
+			if (String.IsNullOrEmpty(domainsTemplateTextBox.Text))
+			{
+				MessageBox.Show("Вы не заполнили поле шаблона!");
+				return;
+			}
+
+			char[] separators = new char[] { ' ', ',', '\r', '\n' };
+			string[] splitedDomainsTemplate = domainsTemplateTextBox.Text.Trim().Split(separators);
+
+			var domains = EmailCounter.GetCorrectDomains(splitedDomainsTemplate);
+
+			SetDomainsTemplateText(domains);
+
+			if (String.IsNullOrEmpty(sourseTextBox.Text))
+			{
+				MessageBox.Show("Вы не ввели текст!");
+				return;
+			}
+
+			if (domains.Count() < 1) return;
+			string[] words = SplitTheText(sourseTextBox.Text);
+
+			var listOfAllMails = EmailCounter.GetAllEmails(words);
+			var filteredEmails = EmailCounter.GetUniqueEmails(listOfAllMails, domains);
+
+			SetEmailsToUniqueEmailsText(filteredEmails);
+
+			SetNumbersOfSourseMails(listOfAllMails.Count());
+			SetNumbersOfUniqueMails(filteredEmails.Count());
+		}
+
+		private void SaveMailsToFileButton_Click(object sender, EventArgs e)
+        {
+			if (String.IsNullOrEmpty(uniqueTextBox.Text))
+			{
+				MessageBox.Show("Недостаточно данных для сохранения!");
+				return;
+			}
+
+			isWorking = true;
+			DialogResult dialogResult = saveEmailsToFile.ShowDialog();
+			if (dialogResult != DialogResult.OK && dialogResult != DialogResult.Yes)
+			{
+				isWorking = false;
+				return;
+			}
+			
+			try
+			{
+				using (StreamWriter writer = new StreamWriter(saveEmailsToFile.FileName))
+				{
+					writer.Write(uniqueTextBox.Text);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Невозможно записать данные в файл. {ex.Message}");
+			}
+			finally
+            {
+				isWorking = false;
+			}
+		}
+
+		/// <summary>
+		/// Функция записи domainsToSet через ", " в domainsTemplateTextBox
+		/// </summary>
+		/// <param name="domainsToSet">Домены к записи</param>
+		private void SetDomainsTemplateText(IEnumerable<string> domainsToSet)
+		{
+			StringBuilder uniqueDomainsText = new StringBuilder();
+			foreach (string domain in domainsToSet)
+			{
+				uniqueDomainsText.Append(domain);
+				uniqueDomainsText.Append(", ");
+			}
+
+			int uniqueMailsTextLength = uniqueDomainsText.Length;
+			// Удаляются добавленные последними ", "
+			if (uniqueMailsTextLength != 0)
+			{
+				uniqueDomainsText.Remove(uniqueMailsTextLength - 2, 2);
+			}
+
+			domainsTemplateTextBox.Text = uniqueDomainsText.ToString();
+		}
+
+        private void resetSampleButton_Click(object sender, EventArgs e)
+        {
+			isWorking = true;
+			domainsTemplateTextBox.Clear();
+			uniqueTextBox.Clear();
+			SetNumbersOfUniqueMails(0);
+			isWorking = false;
+		}
+
+		private void Form_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (isWorking)
+			{
+				MessageBox.Show("Вы не можете закрыть программу во время работы!");
+				e.Cancel = true;
 			}
 			else
-				SampleTextBox.Clear();
+			{
+				Application.Exit();
+			}
 		}
 
-        private void UniqueTextBox_TextChanged(object sender, EventArgs e)
+        private void FindMailsInTheTextForm_Load(object sender, EventArgs e)
         {
 
-        }
-    }
+		}
+	}
 }
