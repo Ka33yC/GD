@@ -54,7 +54,7 @@ namespace GD
 				Thread.Sleep(1000);
 				label3.Text = "OLEG SERGUSHIN";
 				Thread.Sleep(1000);
-				label4.Text = "PRESENTS";
+				label4.Text = "PERESNTS";
 				Thread.Sleep(1000);
 				label5.Text = "Project 'AFCTNOEMAITT'";
 				Thread.Sleep(500);
