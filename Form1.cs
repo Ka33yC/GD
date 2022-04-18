@@ -13,6 +13,8 @@ namespace GD
 			'\\', '|', '*', '$', '%', '^', '\r', '\n' };
 
 		bool isWorking = false;
+		//ssssss
+
 
 		public FindMailsInTheTextForm()
 		{
